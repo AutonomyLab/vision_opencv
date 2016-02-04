@@ -3,7 +3,7 @@ project(cv_bridge)
 
 find_package(catkin REQUIRED COMPONENTS rosconsole sensor_msgs)
 
-set(CUSTOM_OPENCV_DIR "/local_home/opencv/opencv-3.0.0/install")
+set(CUSTOM_OPENCV_DIR "/home/autolab/opencv/opencv-3.1.0/install")
 find_package(OpenCV 3 REQUIRED PATHS ${CUSTOM_OPENCV_DIR} NO_DEFAULT_PATH)
 message(STATUS "OpenCV Includes: ${OpenCV_INCLUDE_DIRS}")
 message(STATUS "OpenCV Libraries: ${OpenCV_LIBRARIES}")
@@ -17,7 +17,7 @@ find_package(Boost REQUIRED)
 endif()
 
 catkin_package(
-  INCLUDE_DIRS include
+  INCLUDE_DIRS ${OpenCV_INCLUDE_DIRS} include
   LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS rosconsole sensor_msgs
   DEPENDS OpenCV3
@@ -26,7 +26,7 @@ catkin_package(
 catkin_python_setup()
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
-include_directories(include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
+include_directories(include ${OpenCV_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
 if(NOT ANDROID)
 add_subdirectory(python)
